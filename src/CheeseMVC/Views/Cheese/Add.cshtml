@@ -1,25 +1,28 @@
 ﻿@model CheeseMVC.ViewModels.AddCheeseViewModel
 
-<h1>Add Cheese</h1>
+<div class="cheese">
+    <h1>@ViewBag.Title</h1>
+    <span class="error"><h6>@ViewBag.Error</h6></span>
+</div>
 
-<form asp-controller="Cheese" asp-action="Add" method="post">
+<form class="cheese" asp-controller="Cheese" asp-action="Add" method="post">
 
     <div class="form-group">
         <label asp-for="Name"></label>
         <input class="form-control" asp-for="Name" />
-        <span asp-validation-for="Name"></span>
+        <span class="error" asp-validation-for="Name"></span>
     </div>
     <div class="form-group">
         <label asp-for="Description"></label>
         <input class="form-control" asp-for="Description" />
-        <span asp-validation-for="Description"></span>
+        <span class="error" asp-validation-for="Description"></span>
     </div>
 
     <div class="form-group">
-        <label asp-for="CategoryID"></label>
+        <label asp-for="CategoryID"></label><br />
         <select asp-for="CategoryID" asp-items="Model.Categories"></select>
     </div>
 
-    <input type="submit" value="Add Cheese" />
+    <input class="add-button" type="submit" value="Add Cheese" />
 
 </form>

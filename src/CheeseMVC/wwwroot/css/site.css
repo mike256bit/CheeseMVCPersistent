@@ -24,15 +24,75 @@ textarea {
 }
 
 /* Make .svg files in the carousel display properly in older browsers */
-.carousel-inner .item img[src$=".svg"]
-{
+.carousel-inner .item img[src$=".svg"] {
     width: 100%;
 }
 
 /* Hide/rearrange for smaller screens */
 @media screen and (max-width: 767px) {
-  /* Hide captions */
-  .carousel-caption {
-    display: none
-  }
+    /* Hide captions */
+    .carousel-caption {
+        display: none
+    }
+}
+
+.body-content {
+    margin-top: 72px;
+}
+
+td, th {
+    padding: 10px;
+    /*width: 100px;*/
+}
+
+th.description {
+    width: 70%;
+}
+
+tr:nth-child(odd) {
+    background-color: #e4e4e4;
+}
+
+table {
+    border: 1px solid #e4e4e4;
+}
+
+.cheese {
+    margin: 30px auto;
+    width: 80%;
+}
+    /*table.cheeses td:first-child {
+        font-weight: bold;
+    }
+
+    table.cheeses td:last-child {
+        width: 80%;
+    }*/
+
+label {
+    margin-right: 15px;
+}
+
+footer {
+
+    position: absolute;
+    bottom: 5px;
+    left: 15px;
+}
+
+select {
+    width: 100%
+}
+
+.add-button {
+    width: 100%;
+    border-width: 0;
+    background-color: dimgray;
+    color: white;
+    height: 30px
+}
+
+.error {
+    font-style: italic;
+    color: red;
 }

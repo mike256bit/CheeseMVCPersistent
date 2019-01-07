@@ -1,14 +1,16 @@
-﻿@{ 
-    ViewBag.Title = "New Menu";
-}
-@model CheeseMVC.ViewModels.AddMenuViewModel
+﻿@model CheeseMVC.ViewModels.AddMenuViewModel
 
-<form asp-controller="Menu" asp-action="Add" method="post">
+<div class="cheese">
+    <h1>@ViewBag.Title</h1>
+    <span class="error"><h6>@ViewBag.Error</h6></span>
+</div>
+
+<form class="cheese" asp-controller="Menu" asp-action="Add" method="post">
     <div class="form-group">
         <label asp-for="Name"></label>
-        <input asp-for="Name">
+        <input class="form-control" asp-for="Name">
         <span asp-validation-for="Name"></span>
     </div>
 
-    <input type="submit" value="Add Menu" />
+    <input class="add-button" type="submit" value="Add Menu" />
 </form>

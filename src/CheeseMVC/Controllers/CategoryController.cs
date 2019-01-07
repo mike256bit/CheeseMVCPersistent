@@ -51,6 +51,7 @@ namespace CheeseMVC.Controllers
 
             }
 
+            ViewBag.Title = "Add A Cheese Category";
             return View(addCategoryViewModel);
         }
     }

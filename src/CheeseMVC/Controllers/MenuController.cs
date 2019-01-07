@@ -20,17 +20,14 @@ namespace CheeseMVC.Controllers
         public IActionResult Index()
         {
             List<Menu> menus = context.Menus.ToList();
-
+            ViewBag.Title = "Cheese Menus";
             return View(menus);
         }
 
         public IActionResult Add(int id)
         {
-            //if(id == 0)
-            //{
-            //    return Redirect("/Menu");
-            //}
             AddMenuViewModel addMenuViewModel = new AddMenuViewModel();
+            ViewBag.Title = "Add a Menu";
             return View(addMenuViewModel);
         }
 
@@ -70,17 +67,19 @@ namespace CheeseMVC.Controllers
                 Items = items
             };
 
+            ViewBag.Title = theMenu.Name;
             return View(viewMenuViewModel);
         }
 
         public IActionResult AddItem(int id)
         {
-
+            //TODO: FIX THIS
             Menu theMenu = context.Menus.Single(p => p.ID == id);
             List<Cheese> theCheeses = context.Cheeses.ToList();
 
             AddMenuItemViewModel addMenuItemViewModel = new AddMenuItemViewModel(theCheeses, theMenu);
 
+            ViewBag.Title = "Add an item to \"" + theMenu.Name + "\"";
             return View(addMenuItemViewModel);
         }
 
@@ -109,6 +108,7 @@ namespace CheeseMVC.Controllers
 
             }
 
+            ViewBag.Title = "Add an item to " + addMenuItemViewModel.Menu;
             return View(addMenuItemViewModel);
         }
     }

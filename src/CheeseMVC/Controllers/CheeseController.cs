@@ -17,16 +17,35 @@ namespace CheeseMVC.Controllers
             context = dbContext;
         }
 
-        // GET: /<controller>/
-        public IActionResult Index()
+        static string errorBag = ""; //initialize error message container
+        
+        public IActionResult Index(int id)
         {
-            IList<Cheese> cheeses = context.Cheeses.Include(p => p.Category).ToList();
+            ViewBag.Error = errorBag; //errorBag holds error messages during redirect, reset error viewbag to capture new errors
 
-            return View(cheeses);
+            if (id == 0) //list all cheeses
+            {
+                IList<Cheese> cheeses = context.Cheeses
+                    .Include(p => p.Category)
+                    .ToList();
+
+                ViewBag.Title = "All Cheeses";
+                return View(cheeses);
+            }
+            else{ //list cheeses based on category ID passed from link
+                IList<Cheese> cheeses = context.Cheeses
+                    .Include(p => p.Category)
+                    .Where(c => c.CategoryID == id)
+                    .ToList();
+
+                ViewBag.Title = context.Categories.Single(c => c.ID == id).Name + " Cheeses";
+                return View(cheeses);
+            }
         }
 
         public IActionResult Add()
         {
+            ViewBag.Title = "Add a Cheese";
             AddCheeseViewModel addCheeseViewModel = new AddCheeseViewModel(context.Categories.ToList());
             return View(addCheeseViewModel);
         }
@@ -37,21 +56,37 @@ namespace CheeseMVC.Controllers
             if (ModelState.IsValid)
             {
                 CheeseCategory newCheeseCategory = context.Categories.Single(p => p.ID == addCheeseViewModel.CategoryID);
+                
+                // TODO: Add verification stage if adding duplicate cheeses by name
 
-                // Add the new cheese to my existing cheeses
                 Cheese newCheese = new Cheese
                 {
                     Name = addCheeseViewModel.Name,
                     Description = addCheeseViewModel.Description,
                     Category = newCheeseCategory
                 };
+                
+                //disallow exact duplicates in DB
+                foreach (var aCheese in context.Cheeses.ToList())
+                {
+                    if (newCheese.Name == aCheese.Name &&
+                        newCheese.Description == aCheese.Description &&
+                        newCheese.Category == aCheese.Category)
+                    {
+                        errorBag = newCheese.Name + " is already in the database with that description! Exact matches are not allowed.";
+                        return Redirect("/");
+                    }
+                }
 
                 context.Cheeses.Add(newCheese);
                 context.SaveChanges();
-
-                return Redirect("/Cheese");
+                errorBag = ""; //reset errorBag to clear old errors
+               
+                return Redirect("/");
             }
 
+            //reload categories and re-present form
+            addCheeseViewModel = new AddCheeseViewModel(context.Categories.ToList());
             return View(addCheeseViewModel);
         }
 
@@ -73,6 +108,7 @@ namespace CheeseMVC.Controllers
 
             context.SaveChanges();
 
+            errorBag = "";
             return Redirect("/");
         }
     }

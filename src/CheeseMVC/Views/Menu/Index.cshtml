@@ -1,12 +1,28 @@
 ﻿@model IList<CheeseMVC.Models.Menu>
 
-<ul>
-    @foreach(var aMenu in Model)
-    {
-        <li>
-            <a asp-controller="Menu" asp-action="ViewMenu" asp-route-id="@aMenu.ID">@aMenu.Name</a>
-        </li>
-    }
-</ul>
+<div class="cheese">
+    <h1>@ViewBag.Title</h1>
+    <span class="error"><h6>@ViewBag.Error</h6></span>
+</div>
 
-<a asp-controller="Menu" asp-action="Add">Add Menu</a>
+<table class="cheese">
+
+    <tr>
+        <th>Name</th>
+    </tr>
+
+    @foreach (var aMenu in Model)
+    {
+        <tr>
+            <td><a asp-controller="Menu" asp-action="ViewMenu" asp-route-id="@aMenu.ID">@aMenu.Name</a>
+            </td>
+        </tr>
+    }
+</table>
+
+@if (Model.Count == 0)
+{
+    <p class="cheese">No menus yet!</p>
+}
+
+<p class="cheese"><strong><a asp-controller="Menu" asp-action="Add">Add Menu</a></strong></p>
